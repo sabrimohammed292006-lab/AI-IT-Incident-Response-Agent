@@ -1,0 +1,151 @@
+{
+  "_note": "Mock IT knowledge base for testing. Each article is a verified, approved fix.",
+  "articles": [
+    {
+      "id": "KB-001",
+      "title": "Account locked after failed login attempts",
+      "category": "account",
+      "keywords": ["locked", "lockout", "failed login", "too many attempts", "cannot login", "مقفول", "الحساب اتقفل"],
+      "symptoms": "User sees 'Your account has been locked' after entering the wrong password several times.",
+      "steps": [
+        "Confirm the account status is 'locked' using check_account_status.",
+        "Verify the employee's identity through the approved IT identity check.",
+        "IT staff unlocks the account from the admin console (agent must not do this itself).",
+        "Ask the employee to sign in and change the password if they are unsure of it."
+      ],
+      "requires_it_staff": true
+    },
+    {
+      "id": "KB-002",
+      "title": "Password expired",
+      "category": "account",
+      "keywords": ["password expired", "expired", "change password", "password reset", "باسورد", "كلمة السر"],
+      "symptoms": "Sign-in fails with 'Your password has expired' or VPN rejects the password.",
+      "steps": [
+        "Confirm the account status is 'password_expired' using check_account_status.",
+        "Guide the employee to the self-service password portal to set a new password.",
+        "After changing it, reconnect to email and VPN with the new password."
+      ],
+      "requires_it_staff": false
+    },
+    {
+      "id": "KB-003",
+      "title": "Account disabled",
+      "category": "account",
+      "keywords": ["disabled", "deactivated", "account disabled", "terminated"],
+      "symptoms": "User sees 'This account has been disabled'.",
+      "steps": [
+        "Confirm the account status is 'disabled' using check_account_status.",
+        "Do not re-enable the account. Disabled accounts need HR and security approval.",
+        "Escalate to a human IT administrator."
+      ],
+      "requires_it_staff": true
+    },
+    {
+      "id": "KB-004",
+      "title": "VPN certificate expired or client outdated",
+      "category": "vpn",
+      "keywords": ["vpn", "certificate", "cert expired", "vpn error", "outdated client", "update vpn"],
+      "symptoms": "VPN shows 'Certificate expired' or fails right after connecting.",
+      "steps": [
+        "Confirm certificate_valid is false or client_up_to_date is false using check_vpn_status.",
+        "Install the latest approved VPN client from the company software portal.",
+        "Request a renewed VPN certificate through the IT portal; IT staff issues it."
+      ],
+      "requires_it_staff": true
+    },
+    {
+      "id": "KB-005",
+      "title": "VPN authentication failed",
+      "category": "vpn",
+      "keywords": ["vpn", "auth failed", "authentication failed", "vpn password", "vpn login"],
+      "symptoms": "VPN rejects the username or password.",
+      "steps": [
+        "Check the account with check_account_status: VPN uses the same credentials.",
+        "If the account is locked or the password expired, fix that first (see KB-001 / KB-002).",
+        "Reconnect to the VPN after the account issue is resolved."
+      ],
+      "requires_it_staff": false
+    },
+    {
+      "id": "KB-006",
+      "title": "VPN connection timed out",
+      "category": "vpn",
+      "keywords": ["vpn", "timeout", "timed out", "vpn disconnected", "vpn slow", "vpn not connecting"],
+      "symptoms": "VPN keeps trying to connect then times out.",
+      "steps": [
+        "Check the user's site network with check_network_status.",
+        "If the site network is up, ask the user to try another network (e.g. mobile hotspot).",
+        "Restart the VPN client and try again."
+      ],
+      "requires_it_staff": false
+    },
+    {
+      "id": "KB-007",
+      "title": "Low disk space",
+      "category": "device",
+      "keywords": ["disk full", "low disk", "storage", "slow laptop", "no space", "الهارد مليان", "slow"],
+      "symptoms": "Device is slow, updates fail, or 'Low disk space' warning appears.",
+      "steps": [
+        "Confirm disk_free_percent is below 10 using check_device_status.",
+        "Empty the Recycle Bin and clear the Downloads folder of files no longer needed.",
+        "Run the built-in Disk Cleanup tool (Windows) or Storage Management (macOS).",
+        "Move large personal files to the approved company cloud storage."
+      ],
+      "requires_it_staff": false
+    },
+    {
+      "id": "KB-008",
+      "title": "Device offline or missing updates",
+      "category": "device",
+      "keywords": ["offline", "not updated", "patch", "updates", "antivirus outdated", "device offline"],
+      "symptoms": "Device is not reporting to IT, or antivirus/patches are out of date.",
+      "steps": [
+        "Confirm device_status and last_patch_date using check_device_status.",
+        "Connect the device to the company network or VPN so it can report in.",
+        "Run Windows Update / macOS Software Update and restart.",
+        "Update the antivirus definitions from the antivirus app."
+      ],
+      "requires_it_staff": false
+    },
+    {
+      "id": "KB-009",
+      "title": "Suspected malware or security alert on device",
+      "category": "security",
+      "keywords": ["virus", "malware", "hacked", "suspicious", "ransomware", "phishing", "security alert", "antivirus disabled", "اختراق", "فيروس"],
+      "symptoms": "Security alerts on the device, antivirus turned off unexpectedly, or strange network activity.",
+      "steps": [
+        "Do not try to clean the device yourself and do not turn it off.",
+        "Disconnect the device from the network (unplug cable / turn off Wi-Fi).",
+        "Escalate immediately to the security team. This incident needs human review."
+      ],
+      "requires_it_staff": true
+    },
+    {
+      "id": "KB-010",
+      "title": "Site network outage",
+      "category": "network",
+      "keywords": ["no internet", "network down", "outage", "internet down", "wifi not working", "النت فاصل", "مفيش نت"],
+      "symptoms": "Everyone at a site has no network access.",
+      "steps": [
+        "Confirm network_status is 'down' using check_network_status.",
+        "If there is an active_outage_id, link the ticket to that outage instead of opening a new investigation.",
+        "Inform users that the network team is working on the outage."
+      ],
+      "requires_it_staff": true
+    },
+    {
+      "id": "KB-011",
+      "title": "Slow or unstable site network",
+      "category": "network",
+      "keywords": ["slow internet", "degraded", "latency", "packet loss", "lag", "النت بطيء"],
+      "symptoms": "Network works but is slow or drops often.",
+      "steps": [
+        "Confirm network_status is 'degraded' using check_network_status.",
+        "Note latency_ms and packet_loss_percent in the ticket for the network team.",
+        "Suggest a wired connection for critical work until the network team resolves it."
+      ],
+      "requires_it_staff": true
+    }
+  ]
+}
