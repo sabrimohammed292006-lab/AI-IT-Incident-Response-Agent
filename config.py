@@ -2,6 +2,7 @@
 import os
 
 from dotenv import load_dotenv
+from agents.tracing import get_trace_provider
 
 load_dotenv()
 
@@ -29,6 +30,9 @@ MAX_EVALUATION_ITERATIONS = 3
 HUMAN_REVIEW_SEVERITIES = {"high", "critical"}
 
 TRACING_ENABLED = False
+
+if not TRACING_ENABLED:
+    get_trace_provider().set_disabled(True)
 
 
 def get_model_name() -> str:

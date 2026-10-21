@@ -1,7 +1,6 @@
-
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 IncidentCategory = Literal[
@@ -71,6 +70,11 @@ class TriageResult(BaseModel):
         max_length=3,
         description="Workers recommended for investigation",
     )
+
+    @field_validator("suggested_workers")
+    @classmethod
+    def unique_workers(cls, v: list[WorkerName]) -> list[WorkerName]:
+        return list(dict.fromkeys(v))
 
     needs_human_review: bool = Field(
         description="Whether human review is recommended",
