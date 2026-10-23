@@ -1,0 +1,33 @@
+<<<<<<< HEAD
+﻿.venv/
+venv/
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+*.db
+*.sqlite
+*.sqlite3
+incident_workflow.log
+.pytest_cache/
+.coverage
+dist/
+build/
+=======
+# Local Python environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Local secrets
+.env
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+>>>>>>> 530b802b55d4089458096319a584d5256e60a0bb
